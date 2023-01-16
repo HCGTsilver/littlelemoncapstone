@@ -29,3 +29,7 @@ class MenuItem(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2, db_index=True)
     featured = models.BooleanField(db_index=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
+    inventory = models.SmallIntegerField(null=True)
+
+    def get_item(self):
+        return f'{self.title} : {str(self.price)}'
