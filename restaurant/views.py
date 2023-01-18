@@ -37,7 +37,8 @@ class MenuView(generics.ListCreateAPIView):
         if serializer.is_valid():
             serializer.save()
             return Response({"status": "success", "data": serializer.data})
-        
+
+
 class CategoriesView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
