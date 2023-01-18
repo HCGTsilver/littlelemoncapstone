@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 
-from .models import Booking, Menu, MenuItem
+from .models import Booking, Menu, MenuItem, Category
 from .serializers import bookingSerializer, menuSerializer, MenuItemSerializer, CategorySerializer
 
 
@@ -37,6 +37,17 @@ class MenuView(generics.ListCreateAPIView):
         if serializer.is_valid():
             serializer.save()
             return Response({"status": "success", "data": serializer.data})
+        
+class CategoriesView(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+    def get_permissions(self):
+        permission_classes = []
+        if self.request.method != 'GET':
+            permission_classes = [IsAuthenticated]
+
+        return [permission() for permission in permission_classes]
 
 
 class MenuItemsView(generics.ListCreateAPIView):
